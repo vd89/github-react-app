@@ -1,28 +1,26 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-class NavBar extends Component {
-	static defaultProps = {
-		title: 'GitHub Project',
-		icon: 'fab fa-github'
-	};
+const NavBar = ({ title, icon }) => {
+	return (
+		<Fragment>
+			<nav className="navbar bg-primary">
+				<h1>
+					<i className={icon}> </i> {title}
+				</h1>
+			</nav>
+		</Fragment>
+	);
+};
 
-	static propTypes = {
-		title: PropTypes.string.isRequired,
-		icon: PropTypes.string.isRequired
-	};
+NavBar.defaultProps = {
+	title: 'GitHub Project',
+	icon: 'fab fa-github'
+};
 
-	render() {
-		return (
-			<Fragment>
-				<nav className="navbar bg-primary">
-					<h1>
-						<i className={this.props.icon}> </i> {this.props.title}
-					</h1>
-				</nav>
-			</Fragment>
-		);
-	}
-}
+NavBar.propTypes = {
+	title: PropTypes.string.isRequired,
+	icon: PropTypes.string.isRequired
+};
 
 export default NavBar;
