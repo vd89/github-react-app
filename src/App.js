@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import NavBar from './components/layouts/NavBar';
-import UserItem from './components/UserItem';
+import Users from './components/Users';
 
 const App = () => {
 	return (
 		<Fragment>
 			<NavBar />
-			<UserItem />
+			<Users />
 		</Fragment>
 	);
 };
