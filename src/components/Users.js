@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UserItem from './UserItem';
 
 class Users extends Component {
 	state = {
@@ -20,18 +21,12 @@ class Users extends Component {
 				login: 'dan',
 				avatar_url: 'https://avatars1.githubusercontent.com/u/219?v=4',
 				html_url: 'https://github.com/dan'
-			},
-			{
-				id: 4,
-				login: 'akhil',
-				avatar_url: 'https://avatars1.githubusercontent.com/u/219?v=4',
-				html_url: 'https://github.com/dan'
 			}
 		]
 	};
 
 	render() {
-		return <div>{this.state.users.map((user) => <div key={user.id}>{user.login}</div>)}</div>;
+		return <div>{this.state.users.map((user) => <UserItem key={user.id} user={user} />)}</div>;
 	}
 }
 
