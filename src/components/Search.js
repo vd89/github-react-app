@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 class Search extends Component {
 	static propTypes = {
-		searchUsers: PropTypes.func.isRequired
+		searchUsers: PropTypes.func.isRequired,
+		clearUsers: PropTypes.func.isRequired
 	};
 
 	constructor(props) {
@@ -42,9 +43,11 @@ class Search extends Component {
 					/>
 					<input type="submit" value="Submit" className="btn btn-dark btn-block" />
 				</form>
-				<button className="btn btn-light btn-block" onClick={this.onClickHandler}>
-					Clear Users
-				</button>
+				{this.props.showClear && (
+					<button className="btn btn-light btn-block" onClick={this.onClickHandler}>
+						Clear Users
+					</button>
+				)}
 			</div>
 		);
 	}
