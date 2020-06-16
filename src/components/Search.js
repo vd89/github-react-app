@@ -16,7 +16,10 @@ class Search extends Component {
 	}
 	onSubmitHandler(event) {
 		event.preventDefault();
-		console.log(this.state.text);
+		this.props.searchUsers(this.state.text);
+		this.setState({
+			text: ''
+		});
 	}
 
 	render() {
