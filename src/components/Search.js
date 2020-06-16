@@ -7,17 +7,22 @@ class Search extends Component {
 			text: ''
 		};
 		this.onChangeHandler = this.onChangeHandler.bind(this);
+		this.onSubmitHandler = this.onSubmitHandler.bind(this);
 	}
 	onChangeHandler(event) {
 		this.setState({
 			text: event.target.value
 		});
 	}
+	onSubmitHandler(event) {
+		event.preventDefault();
+		console.log(this.state.text);
+	}
 
 	render() {
 		return (
 			<div>
-				<form className="form">
+				<form className="form" onSubmit={this.onSubmitHandler}>
 					<input
 						type="text"
 						name="text"
