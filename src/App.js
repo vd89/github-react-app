@@ -8,14 +8,17 @@ import Alert from './components/layouts/Alert';
 import About from './components/layouts/About';
 
 class App extends Component {
+	//Default State
 	constructor(props) {
 		super(props);
 		this.state = {
 			users: [],
 			loading: false,
-			alert: null
+			alert: null,
+			user: {}
 		};
 	}
+	//Renders first 30 users when Home Page loads
 	async componentDidMount() {
 		this.setState({ loading: true });
 		const res = await axios.get('https://api.github.com/users');
@@ -24,6 +27,7 @@ class App extends Component {
 			loading: false
 		});
 	}
+	//Search for github username string
 	searchUsers = async (text) => {
 		this.setState({ loading: true });
 		const res = await axios.get(`https://api.github.com/search/users?q=${text}`);
@@ -32,12 +36,14 @@ class App extends Component {
 			loading: false
 		});
 	};
+	//Clear Button Method
 	clearUsers = () => {
 		this.setState({
 			users: [],
 			loading: false
 		});
 	};
+	//Show Alert
 	setAlert = (msg, type) => {
 		this.setState({
 			alert: { msg: msg, type: type }
@@ -48,6 +54,16 @@ class App extends Component {
 			});
 		}, 2500);
 	};
+	//Get Single User Method
+	getUser = async (username) => {
+		this.setState({ loading: true });
+		const res = await axios.get(`https://api.github.com/users/${username}`);
+		this.setState({
+			user: res.data,
+			loading: false
+		});
+	};
+
 	render() {
 		return (
 			<Router>
