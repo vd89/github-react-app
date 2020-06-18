@@ -6,6 +6,7 @@ import axios from 'axios';
 import Search from './components/Search';
 import Alert from './components/layouts/Alert';
 import About from './components/layouts/About';
+import User from './components/User';
 
 class App extends Component {
 	//Default State
@@ -88,6 +89,18 @@ class App extends Component {
 								)}
 							/>
 							<Route exact path="/about" component={About} />
+							<Route
+								exact
+								path="/user/:login"
+								render={(props) => (
+									<User
+										{...props}
+										getUser={this.getUser}
+										user={this.state.user}
+										loading={this.state.loading}
+									/>
+								)}
+							/>
 						</Switch>
 					</div>
 				</div>
