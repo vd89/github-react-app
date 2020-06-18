@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 class Search extends Component {
 	static propTypes = {
 		searchUsers: PropTypes.func.isRequired,
-		clearUsers: PropTypes.func.isRequired
+		clearUsers: PropTypes.func.isRequired,
+		showClear: PropTypes.bool.isRequired
 	};
 
 	constructor(props) {
@@ -22,10 +23,14 @@ class Search extends Component {
 	}
 	onSubmitHandler(event) {
 		event.preventDefault();
-		this.props.searchUsers(this.state.text);
-		this.setState({
-			text: ''
-		});
+		if (this.state.text === '') {
+			this.props.setAlert('Enter GitHub User Name', 'danger');
+		} else {
+			this.props.searchUsers(this.state.text);
+			this.setState({
+				text: ''
+			});
+		}
 	}
 	onClickHandler() {
 		this.props.clearUsers();
