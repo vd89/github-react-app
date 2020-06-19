@@ -7,7 +7,8 @@ import Search from './components/Search';
 import Alert from './components/layouts/Alert';
 import About from './components/layouts/About';
 import User from './components/User';
-
+const CLIENT_ID = 'c5868f39180303a9e8e4';
+const SECRET_KEY = '32735d5e618c1fc35ce25bcc7c44b0472f590a7c';
 class App extends Component {
 	//Default State
 	constructor(props) {
@@ -16,13 +17,14 @@ class App extends Component {
 			users: [],
 			loading: false,
 			alert: null,
-			user: {}
+			user: {},
+			repos: []
 		};
 	}
 	//Renders first 30 users when Home Page loads
 	async componentDidMount() {
 		this.setState({ loading: true });
-		const res = await axios.get('https://api.github.com/users');
+		const res = await axios.get(`https://api.github.com/users?client_id=${CLIENT_ID}&client_secret=${SECRET_KEY}`);
 		this.setState({
 			users: res.data,
 			loading: false
@@ -31,7 +33,9 @@ class App extends Component {
 	//Search for github username string
 	searchUsers = async (text) => {
 		this.setState({ loading: true });
-		const res = await axios.get(`https://api.github.com/search/users?q=${text}`);
+		const res = await axios.get(
+			`https://api.github.com/search/users?q=${text}&client_id=${CLIENT_ID}&client_secret=${SECRET_KEY}`
+		);
 		this.setState({
 			users: res.data.items,
 			loading: false
@@ -58,9 +62,22 @@ class App extends Component {
 	//Get Single User Method
 	getUser = async (username) => {
 		this.setState({ loading: true });
-		const res = await axios.get(`https://api.github.com/users/${username}`);
+		const res = await axios.get(
+			`https://api.github.com/users/${username}?client_id=${CLIENT_ID}&client_secret=${SECRET_KEY}`
+		);
 		this.setState({
 			user: res.data,
+			loading: false
+		});
+	};
+	//Get User Repos
+	getUserRepos = async (username) => {
+		this.setState({ loading: true });
+		const res = await axios.get(
+			`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${CLIENT_ID}&client_secret=${SECRET_KEY}`
+		);
+		this.setState({
+			repos: res.data,
 			loading: false
 		});
 	};
@@ -98,6 +115,8 @@ class App extends Component {
 										getUser={this.getUser}
 										user={this.state.user}
 										loading={this.state.loading}
+										getUserRepos={this.getUserRepos}
+										repos={this.state.repos}
 									/>
 								)}
 							/>
