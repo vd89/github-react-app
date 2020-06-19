@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './components/layouts/NavBar';
@@ -16,7 +18,7 @@ class App extends Component {
 			users: [],
 			loading: false,
 			alert: null,
-			user: {}
+			user: {},
 		};
 	}
 	//Renders first 30 users when Home Page loads
@@ -25,33 +27,36 @@ class App extends Component {
 		const res = await axios.get('https://api.github.com/users');
 		this.setState({
 			users: res.data,
-			loading: false
+			loading: false,
 		});
 	}
 	//Search for github username string
 	searchUsers = async (text) => {
 		this.setState({ loading: true });
-		const res = await axios.get(`https://api.github.com/search/users?q=${text}`);
+		const res = await axios.get(
+			`https://api.github.com/search/users?q=${text}`,
+		);
+
 		this.setState({
 			users: res.data.items,
-			loading: false
+			loading: false,
 		});
 	};
 	//Clear Button Method
 	clearUsers = () => {
 		this.setState({
 			users: [],
-			loading: false
+			loading: false,
 		});
 	};
 	//Show Alert
 	setAlert = (msg, type) => {
 		this.setState({
-			alert: { msg: msg, type: type }
+			alert: { msg: msg, type: type },
 		});
 		setTimeout(() => {
 			this.setState({
-				alert: null
+				alert: null,
 			});
 		}, 2500);
 	};
@@ -61,7 +66,7 @@ class App extends Component {
 		const res = await axios.get(`https://api.github.com/users/${username}`);
 		this.setState({
 			user: res.data,
-			loading: false
+			loading: false,
 		});
 	};
 
@@ -70,12 +75,12 @@ class App extends Component {
 			<Router>
 				<div>
 					<NavBar />
-					<div className="container">
+					<div className='container'>
 						<Alert alert={this.state.alert} />
 						<Switch>
 							<Route
 								exact
-								path="/"
+								path='/'
 								render={(props) => (
 									<Fragment>
 										<Search
@@ -84,14 +89,17 @@ class App extends Component {
 											showClear={this.state.users.length > 0 ? true : false}
 											setAlert={this.setAlert}
 										/>
-										<Users loading={this.state.loading} users={this.state.users} />
+										<Users
+											loading={this.state.loading}
+											users={this.state.users}
+										/>
 									</Fragment>
 								)}
 							/>
-							<Route exact path="/about" component={About} />
+							<Route exact path='/about' component={About} />
 							<Route
 								exact
-								path="/user/:login"
+								path='/user/:login'
 								render={(props) => (
 									<User
 										{...props}
