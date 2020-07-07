@@ -1,61 +1,38 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-class Search extends Component {
-	static propTypes = {
-		searchUsers: PropTypes.func.isRequired,
-		clearUsers: PropTypes.func.isRequired,
-		showClear: PropTypes.bool.isRequired
+import React, { useState } from 'react';
+
+const Search = ({ searchUsers, clearUsers, showClear, setAlert }) => {
+	const [text, setText] = useState('');
+	const onChangeHandler = (event) => {
+		setText(event.target.value);
 	};
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			text: ''
-		};
-		this.onChangeHandler = this.onChangeHandler.bind(this);
-		this.onSubmitHandler = this.onSubmitHandler.bind(this);
-		this.onClickHandler = this.onClickHandler.bind(this);
-	}
-	onChangeHandler(event) {
-		this.setState({
-			text: event.target.value
-		});
-	}
-	onSubmitHandler(event) {
+	const onSubmitHandler = (event) => {
 		event.preventDefault();
-		if (this.state.text === '') {
-			this.props.setAlert('Enter GitHub User Name', 'danger');
+		if (text === '') {
+			setAlert('Enter GitHub User Name', 'danger');
 		} else {
-			this.props.searchUsers(this.state.text);
-			this.setState({
-				text: ''
-			});
+			searchUsers(text);
+			setText('');
 		}
-	}
-	onClickHandler() {
-		this.props.clearUsers();
-	}
-	render() {
-		return (
-			<div>
-				<form className="form" onSubmit={this.onSubmitHandler}>
-					<input
-						type="text"
-						name="text"
-						value={this.state.text}
-						placeholder="Enter Github UserName to Search"
-						onChange={this.onChangeHandler}
-					/>
-					<input type="submit" value="Submit" className="btn btn-dark btn-block" />
-				</form>
-				{this.props.showClear && (
-					<button className="btn btn-light btn-block" onClick={this.onClickHandler}>
-						Clear Users
-					</button>
-				)}
-			</div>
-		);
-	}
-}
+	};
+
+	const onClickHandler = () => {
+		clearUsers();
+	};
+
+	return (
+		<div>
+			<form className='form' onSubmit={onSubmitHandler}>
+				<input type='text' name='text' value={text} placeholder='Enter Github UserName to Search' onChange={onChangeHandler} />
+				<input type='submit' value='Submit' className='btn btn-dark btn-block' />
+			</form>
+			{showClear && (
+				<button className='btn btn-light btn-block' onClick={onClickHandler}>
+					Clear Users
+				</button>
+			)}
+		</div>
+	);
+};
 
 export default Search;
